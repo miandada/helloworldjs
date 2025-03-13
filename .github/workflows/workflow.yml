@@ -11,17 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set-env.outputs.environment }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    steps:    
 
       - name: Determine Environment
         id: set-env
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "environment=production" >> $GITHUB_ENV
+            echo "environment=production" > $GITHUB_OUTPUT
           else
-            echo "environment=staging" >> $GITHUB_ENV
+            echo "environment=staging" >> $GITHUB_OUTPUT
           fi        
   build:
     runs-on: ubuntu-latest
@@ -56,13 +54,13 @@ jobs:
         run: |
           APP_NAME=$(jq -r .name package.json)
           APP_VERSION=$(jq -r .version package.json)
-          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
-          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set Environment Variables
         id: set-env
         run: |
-          echo "artifact_name=${APP_NAME}-${APP_VERSION}" >> $GITHUB_ENV
+          echo "artifact_name=${APP_NAME}-${APP_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build Project for the Correct Environment
         run: |
@@ -111,9 +109,9 @@ jobs:
         id: calculate-bucket
         run: |
           if [ "${{ needs.detect-environment.outputs.environment }}" == "production" ]; then
-            echo "s3_bucket_name=${{ secrets.S3_BUCKET_PRODUCTION }}" >> $GITHUB_ENV
+            echo "s3_bucket_name=${{ secrets.S3_BUCKET_PRODUCTION }}" >> $GITHUB_OUTPUT
           else
-            echo "s3_bucket_name=${{ secrets.S3_BUCKET_STAGING }}" >> $GITHUB_ENV
+            echo "s3_bucket_name=${{ secrets.S3_BUCKET_STAGING }}" >> $GITHUB_OUTPUT
           fi
           
       - name: Deploy to S3
