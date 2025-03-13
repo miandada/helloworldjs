@@ -22,8 +22,7 @@ jobs:
             echo "environment=production" >> $GITHUB_ENV
           else
             echo "environment=staging" >> $GITHUB_ENV
-          fi
-          echo "environment=${{ env.environment }}" >> $GITHUB_ENV   
+          fi        
   build:
     runs-on: ubuntu-latest
     needs: detect-environment
