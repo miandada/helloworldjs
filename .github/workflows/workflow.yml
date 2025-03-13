@@ -84,14 +84,14 @@ jobs:
           npx cypress run --headless
 
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.artifact_name }}
+          name: ${{ steps.set-env.outputs.artifact_name }}
           path: build/
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [detect-environment,build]
     environment: ${{ needs.detect-environment.outputs.environment }}  # Usamos el entorno calculado en detect-environment
     steps:
       - name: Download Build Artifact
@@ -115,8 +115,7 @@ jobs:
           else
             echo "s3_bucket_name=${{ secrets.S3_BUCKET_STAGING }}" >> $GITHUB_ENV
           fi
-          echo "s3_bucket_name=${{ env.s3_bucket_name }}" >> $GITHUB_ENV
-
+          
       - name: Deploy to S3
         run: |
-          aws s3 sync build/ s3://${{ env.s3_bucket_name }} --delete
+          aws s3 sync build/ s3://${{ steps.calculate-bucket.outputs.s3_bucket_name }} --delete
