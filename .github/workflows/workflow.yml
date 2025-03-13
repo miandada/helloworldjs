@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest    
     outputs:
-      artifact_name: ${{ steps.set-env.outputs.artifact_name }}
+      artifact_name: ${{ steps.app-info.outputs.artifact_name }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -33,8 +33,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Extract App Name Version for artifact
-        id: extract-info
+      - name: obtain App Name Version for artifact
+        id: app-info
         run: |
           APP_NAME=$(jq -r .name package.json)
           APP_VERSION=$(jq -r .version package.json)
@@ -49,7 +49,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.extract-info.outputs.artifact_name }}
+          name: ${{ steps.app-info.outputs.artifact_name }}
           path: build/
 
   detect-environment:
@@ -73,7 +73,7 @@ jobs:
     environment: ${{ needs.detect-environment.outputs.environment }}  # Usamos el entorno calculado en detect-environment
     steps:
       - name: Download Build Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact_name }}
           path: build/
