@@ -33,18 +33,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Extract App Name and Version
+      - name: Extract App Name Version for artifact
         id: extract-info
         run: |
           APP_NAME=$(jq -r .name package.json)
           APP_VERSION=$(jq -r .version package.json)
           echo "APP_NAME=$APP_NAME" >> $GITHUB_OUTPUT
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Set Environment Variables
-        id: set-env
-        run: |
-          echo "artifact_name=${APP_NAME}-${APP_VERSION}" >> $GITHUB_OUTPUT
+          echo "artifact_name=$APP_NAME-$APP_VERSION" >> $GITHUB_OUTPUT
 
       - name: Build Project 
         run: |        
@@ -53,7 +49,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.set-env.outputs.artifact_name }}
+          name: ${{ steps.extract-info.outputs.artifact_name }}
           path: build/
 
   detect-environment:
