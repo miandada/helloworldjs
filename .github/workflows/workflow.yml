@@ -89,5 +89,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-          publish_branch: ${{ needs.detect-environment.outputs.environment == 'production' && 'gh-pages' || 'staging' }}
+          publish_dir: ./build       
