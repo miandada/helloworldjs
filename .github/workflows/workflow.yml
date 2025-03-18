@@ -82,7 +82,7 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: react-app-${{ needs.build.outputs.artifact_name }}
+          name: ${{ needs.build.outputs.artifact_name }}
           path: build/
 
       - name: Deploy to GitHub Pages
