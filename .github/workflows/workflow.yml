@@ -90,4 +90,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          destination_branch: ${{ needs.detect-environment.outputs.environment == 'production' && 'gh-pages' || 'staging' }}
+          publish_branch: ${{ needs.detect-environment.outputs.environment == 'production' && 'gh-pages' || 'staging' }}
