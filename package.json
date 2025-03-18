@@ -1,5 +1,6 @@
 {
   "name": "my-app",
+  "homepage": "https://miandada.github.io/helloworldjs",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,6 +18,8 @@
     "cross-env": "^7.0.3"
   }, 
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build:production": "cross-env REACT_APP_ENV=production react-scripts build",
     "build:staging": "cross-env REACT_APP_ENV=staging react-scripts build",
