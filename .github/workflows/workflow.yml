@@ -1,4 +1,4 @@
-name: Deploy React to S3
+name: Deploy React APp
 
 on:
   push:
