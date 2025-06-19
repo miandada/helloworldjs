@@ -86,9 +86,16 @@ jobs:
         with:
           name: ${{ needs.build.outputs.artifact_name }}
           path: build/
+      
+      - name: check deploy
+        run: ls -l
+    
+      - name: check deploy
+        working-directory: build
+        run: ls -l
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/    
+          publish_dir: ../build/    
