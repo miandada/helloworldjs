@@ -65,12 +65,13 @@ jobs:
         id: set-env
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "environment=github-pages" > $GITHUB_OUTPUT
+            echo "environment=production" > $GITHUB_OUTPUT
           else
             echo "environment=staging" >> $GITHUB_OUTPUT
           fi                
 
 
+          
 
   deploy:
     runs-on: ubuntu-latest
