@@ -1,6 +1,7 @@
 name: Deploy React APp
 
 on:
+  workflow_call:    
   workflow_dispatch:    
   push:
     branches:
