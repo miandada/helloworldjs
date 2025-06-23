@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.app-info.outputs.artifact_name }}
-          path: build/
+          path: ${{inputs.working-dir}}/build/
 
   detect-environment:   
     runs-on: ubuntu-latest
@@ -97,7 +97,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact_name }}
-          path: build
+          path: ${{inputs.working-dir}}/build
       
       - name: check deploy
         run: ls -l
@@ -110,4 +110,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./${{inputs.working-dir}}/build
