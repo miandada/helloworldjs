@@ -2,6 +2,11 @@ name: Deploy React APp
 
 on:
   workflow_call:    
+    inputs: 
+      working-dir:
+        type: string
+        required: false
+        default: '.'
   workflow_dispatch:    
   push:
     branches:
