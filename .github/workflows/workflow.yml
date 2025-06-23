@@ -64,10 +64,7 @@ jobs:
           name: ${{ steps.app-info.outputs.artifact_name }}
           path: build/
 
-  detect-environment:
-    defaults:
-      run:
-        working-directory: ${{inputs.working-dir}}
+  detect-environment:   
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set-env.outputs.environment }}
