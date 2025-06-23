@@ -102,9 +102,6 @@ jobs:
       - name: check deploy
         run: ls -l
     
-      - name: check deploy
-        working-directory: build
-        run: ls -l
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
